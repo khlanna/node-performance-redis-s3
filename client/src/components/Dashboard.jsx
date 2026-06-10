@@ -1,8 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import BlogList from './blogs/BlogList';
+import { Link } from "react-router-dom";
 
-const Dashboard = () => {
+import BlogList from "./blogs/BlogList";
+
+export default function Dashboard() {
   return (
     <div>
       <BlogList />
@@ -13,6 +13,4 @@ const Dashboard = () => {
       </div>
     </div>
   );
-};
-
-export default Dashboard;
+}
