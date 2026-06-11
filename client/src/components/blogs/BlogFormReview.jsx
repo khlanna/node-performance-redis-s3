@@ -19,7 +19,7 @@ export default function BlogFormReview({ onCancel }) {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    await submitBlog(formValues);
+    await submitBlog(formValues, imageFile);
     navigate("/blogs");
   };
 

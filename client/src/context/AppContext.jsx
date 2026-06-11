@@ -1,4 +1,10 @@
-import { createContext, useCallback, useContext, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 import axios from "axios";
 
 const AppContext = createContext(null);
@@ -29,8 +35,15 @@ export function AppProvider({ children }) {
     setBlogs((prev) => ({ ...prev, [res.data._id]: res.data }));
   }, []);
 
-  const submitBlog = useCallback(async (values) => {
-    const res = await axios.post("/api/blogs", values);
+  const submitBlog = useCallback(async (values, file) => {
+    const uploadConfig = await axios.get("/api/upload");
+    const { url, key } = uploadConfig.data;
+    await axios.put(url, file, {
+      headers: {
+        "Content-Type": file.type,
+      },
+    });
+    const res = await axios.post("/api/blogs", { ...values, imageUrl: key });
     setBlogs((prev) => ({ ...prev, [res.data._id]: res.data }));
     return res.data;
   }, []);
