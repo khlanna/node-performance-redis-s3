@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormContext } from "react-hook-form";
 
@@ -9,6 +10,12 @@ export default function BlogFormReview({ onCancel }) {
   const { submitBlog } = useApp();
   const navigate = useNavigate();
   const formValues = getValues();
+  const [imageFile, setImageFile] = useState(null);
+
+  const handleImageChange = (event) => {
+    const file = event.target.files?.[0] ?? null;
+    setImageFile(file);
+  };
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -25,6 +32,14 @@ export default function BlogFormReview({ onCancel }) {
           <div>{formValues[name]}</div>
         </div>
       ))}
+      <h5>Add an Image</h5>
+
+      <input type="file" accept="image/*" onChange={handleImageChange} />
+      {imageFile && (
+        <p>
+          Selected: {imageFile.name} ({Math.round(imageFile.size / 1024)} KB)
+        </p>
+      )}
       <div>
         <button
           type="button"
